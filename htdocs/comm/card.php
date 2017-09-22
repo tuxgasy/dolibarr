@@ -535,7 +535,8 @@ if ($id > 0)
 	print '<td>'.$langs->trans("CurrentOutstandingBill").'</td>';
 	print '<td>'.price($outstandingBills).$warn.'</td>';
 	print '</tr>';
-	
+	$parameters = array();
+  $reshook = $hookmanager->executeHooks('addMoreSummary', $parameters, $object, $action);
 	print '</table>';
 	print '<br>';
 
