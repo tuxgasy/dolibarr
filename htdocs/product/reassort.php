@@ -74,7 +74,7 @@ if (! empty($canvas))
 }
 
 // Define virtualdiffersfromphysical
-$virtualdiffersfromphysical=0;
+$virtualdiffersfromphysical=1;
 if (! empty($conf->global->STOCK_CALCULATE_ON_SHIPMENT) || ! empty($conf->global->STOCK_CALCULATE_ON_SUPPLIER_DISPATCH_ORDER))
 {
     $virtualdiffersfromphysical=1;		// According to increase/decrease stock options, virtual and physical stock may differs.
@@ -317,6 +317,7 @@ if ($resql)
 	print '</tr>';
 
 	$var=True;
+  $totalarray = array();
 	while ($i < min($num,$limit))
 	{
 		$objp = $db->fetch_object($resql);
@@ -349,6 +350,7 @@ if ($resql)
 		print '<td align="right">';
         if ($objp->seuil_stock_alerte != '' && ($objp->stock_physique < $objp->seuil_stock_alerte)) print img_warning($langs->trans("StockTooLow")).' ';
 		print $objp->stock_physique;
+    $totalarray['stock_physique'] += $objp->stock_physique;
 		print '</td>';
 		
 		// Details per warehouse
@@ -359,6 +361,7 @@ if ($resql)
 					
 					print '<td align="right">';
 					print empty($product->stock_warehouse[$wh['id']]->real) ? '0' : $product->stock_warehouse[$wh['id']]->real;
+          $totalarray['wh'][$wh['id']] += empty($product->stock_warehouse[$wh['id']]->real) ? 0 : $product->stock_warehouse[$wh['id']]->real;
 					print '</td>';
 				}
 			}			
@@ -372,6 +375,7 @@ if ($resql)
 	    		print '<td align="right">';
 			if ($objp->seuil_stock_alerte != '' && ($product->stock_theorique < $objp->seuil_stock_alerte)) print img_warning($langs->trans("StockTooLow")).' ';
 	    		print $product->stock_theorique;
+          $totalarray['stock_theorique'] += $product->stock_theorique;
 	    		print '</td>';
 		}
 		print '<td align="right"><a href="'.DOL_URL_ROOT.'/product/stock/mouvement.php?idproduct='.$product->id.'">'.$langs->trans("Movements").'</a></td>';
@@ -380,6 +384,27 @@ if ($resql)
 		print "</tr>\n";
 		$i++;
 	}
+
+  print '<tr class="liste_total"><td colspan="2">Total</td>';
+  if (! empty($conf->service->enabled) && $type == 1)
+  {
+    print '<td></td>';
+  }
+  print '<td colspan="2"></td>';
+  print '<td align="right">'.$totalarray['stock_physique'].'</td>';
+  if (! empty($conf->global->STOCK_DETAIL_ON_WAREHOUSE))
+  {
+    if($nb_warehouse>1) {
+      foreach($warehouses_list as &$wh) {
+        print '<td align="right">'.$totalarray['wh'][$wh['id']].'</td>';
+      }
+    }
+  }
+  if ($virtualdiffersfromphysical)
+  {
+    print '<td align="right">'.$totalarray['stock_theorique'].'</td>';
+  }
+  print '<td colspan="3"></td></tr>';
 
 	print "</table>";
 	print '</div>';
