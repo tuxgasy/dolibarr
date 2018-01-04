@@ -105,7 +105,7 @@ else if ($type=='1') $result=restrictedArea($user,'service','','','','','',$objc
 else $result=restrictedArea($user,'produit|service','','','','','',$objcanvas);
 
 // Define virtualdiffersfromphysical
-$virtualdiffersfromphysical=0;
+$virtualdiffersfromphysical=1;
 if (! empty($conf->global->STOCK_CALCULATE_ON_SHIPMENT) || ! empty($conf->global->STOCK_CALCULATE_ON_SUPPLIER_DISPATCH_ORDER))
 {
     $virtualdiffersfromphysical=1;		// According to increase/decrease stock options, virtual and physical stock may differs.
