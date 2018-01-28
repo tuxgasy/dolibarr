@@ -1948,9 +1948,11 @@ function pdf_getLinkedObjects($object,$outputlangs)
 			foreach($objects as $elementobject)
 			{
 				$linkedobjects[$objecttype]['ref_title'] = $outputlangs->transnoentities("RefOrder");
-				$linkedobjects[$objecttype]['ref_value'] = $outputlangs->transnoentities($elementobject->ref) . ($elementobject->ref_client ? ' ('.$elementobject->ref_client.')' : '') . ($elementobject->ref_supplier ? ' ('.$elementobject->ref_supplier.')' : '');
-				$linkedobjects[$objecttype]['date_title'] = $outputlangs->transnoentities("OrderDate");
-				$linkedobjects[$objecttype]['date_value'] = dol_print_date($elementobject->date,'day','',$outputlangs);
+				if(!isset($linkedobjects[$objecttype]['ref_value'])) $linkedobjects[$objecttype]['ref_value'] = $outputlangs->transnoentities($elementobject->ref);
+        // concat ref order
+        else $linkedobjects[$objecttype]['ref_value'] .= ' / ' . $outputlangs->transnoentities($elementobject->ref);
+				//$linkedobjects[$objecttype]['date_title'] = $outputlangs->transnoentities("OrderDate");
+				//$linkedobjects[$objecttype]['date_value'] = dol_print_date($elementobject->date,'day','',$outputlangs);
 			}
 		}
 		else if ($objecttype == 'contrat')
