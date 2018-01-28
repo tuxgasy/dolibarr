@@ -4041,7 +4041,7 @@ else if ($id > 0 || ! empty($ref))
 				// For credit note only
 				if ($object->type == Facture::TYPE_CREDIT_NOTE && $object->statut == 1 && $object->paye == 0 && $user->rights->facture->paiement)
 				{
-					if ($resteapayer == 0)
+					if ($resteapayer == 0 and empty($conf->global->ALLOW_PAYMENT_IF_ZERO))
 					{
 						print '<div class="inline-block divButAction"><span class="butActionRefused" title="'.$langs->trans("DisabledBecauseRemainderToPayIsZero").'">'.$langs->trans('DoPaymentBack').'</span></div>';
 					}
