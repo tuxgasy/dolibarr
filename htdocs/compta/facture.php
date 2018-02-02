@@ -611,7 +611,7 @@ if (empty($reshook))
 			$i = 0;
 			foreach ($object->lines as $line)
 			{
-				if ($line->total_ht!=0)
+				if ($line->total_ht!=0 and $line->special_code!=1790)
 				{ 	// no need to create discount if amount is null
 					$amount_ht[$line->tva_tx] += $line->total_ht;
 					$amount_tva[$line->tva_tx] += $line->total_tva;
