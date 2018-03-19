@@ -2,7 +2,7 @@
 Delivery=Livraison
 DeliveryRef=Référence de livraison
 DeliveryCard=Fiche réception
-DeliveryOrder=Bon de réception
+DeliveryOrder=Bon de livraison
 DeliveryDate=Date de livraison
 CreateDeliveryOrder=Générer bon de réception
 DeliveryStateSaved=Le statut de livraison est enregistré
