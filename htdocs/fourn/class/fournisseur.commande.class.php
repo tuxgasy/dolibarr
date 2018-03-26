@@ -2288,7 +2288,7 @@ class CommandeFournisseur extends CommonOrder
 
         $error = 0;
 
-        if ($this->brouillon)
+        if ($this->statut <= 3)
         {
             $this->db->begin();
 
