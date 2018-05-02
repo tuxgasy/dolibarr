@@ -2903,18 +2903,30 @@ else if ($id > 0 || ! empty($ref))
 		$i ++;
 		$close [$i] ['code'] = 'badcustomer';
 		$i ++;
+    $close [$i] ['code'] = 'debtcompensation';
+    $i ++;
+    $close [$i] ['code'] = 'bankcharges';
+    $i ++;
 		// Help
 		$i = 0;
 		$close [$i] ['label'] = $langs->trans("HelpEscompte") . '<br><br>' . $langs->trans("ConfirmClassifyPaidPartiallyReasonDiscountVatDesc");
 		$i ++;
 		$close [$i] ['label'] = $langs->trans("ConfirmClassifyPaidPartiallyReasonBadCustomerDesc");
 		$i ++;
+    $close [$i] ['label'] = 'Compensation de créance';
+    $i ++;
+    $close [$i] ['label'] = 'Le reste à payer <strong>('.$resteapayer.' '.$langs->trans('Currency'.$conf->currency).')</strong> est un frais bancaire';
+    $i ++;
 		// Texte
 		$i = 0;
 		$close [$i] ['reason'] = $form->textwithpicto($langs->transnoentities("ConfirmClassifyPaidPartiallyReasonDiscountVat", $resteapayer, $langs->trans("Currency" . $conf->currency)), $close [$i] ['label'], 1);
 		$i ++;
 		$close [$i] ['reason'] = $form->textwithpicto($langs->transnoentities("ConfirmClassifyPaidPartiallyReasonBadCustomer", $resteapayer, $langs->trans("Currency" . $conf->currency)), $close [$i] ['label'], 1);
 		$i ++;
+    $close [$i] ['reason'] = $form->textwithpicto($close [$i] ['label'], "Une <strong>compensation de créance</strong> consiste à se payer une créance que lui un débiteur sur une dette qu'elle doit elle-même à ce dernier.", 1);
+    $i ++;
+    $close [$i] ['reason'] = $form->textwithpicto($close [$i] ['label'], "Un <strong>frais bancaire</strong> peut être lié à un frais de virement, une commission de la banque (ex.: Paypal).", 1);
+    $i ++;
 		// arrayreasons[code]=reason
 		foreach ($close as $key => $val) {
 			$arrayreasons [$close [$key] ['code']] = $close [$key] ['reason'];
@@ -3750,7 +3762,7 @@ else if ($id > 0 || ! empty($ref))
             print '<tr><td colspan="' . $nbcols . '" align="right" class="nowrap">';
             print $form->textwithpicto($langs->trans("Abandoned") . ':', $langs->trans("HelpAbandonBadCustomer"), - 1);
             print '</td><td align="right">' . price($object->total_ttc - $creditnoteamount - $depositamount - $totalpaye) . '</td><td>&nbsp;</td></tr>';
-            // $resteapayeraffiche=0;
+            $resteapayeraffiche=0;
             $cssforamountpaymentcomplete = '';
         }
         // Paye partiellement ou Abandon 'product_returned'
@@ -3768,6 +3780,24 @@ else if ($id > 0 || ! empty($ref))
             if ($object->close_note)
                 $text .= '<br><br><b>' . $langs->trans("Reason") . '</b>:' . $object->close_note;
             print $form->textwithpicto($langs->trans("Abandoned") . ':', $text, - 1);
+            print '</td><td align="right">' . price($object->total_ttc - $creditnoteamount - $depositamount - $totalpaye) . '</td><td>&nbsp;</td></tr>';
+            $resteapayeraffiche = 0;
+            $cssforamountpaymentcomplete = '';
+        }
+        // Paye partiellement ou Abondon 'debtcompensation'
+        if (($object->statut == Facture::STATUS_CLOSED || $object->statut == Facture::STATUS_ABANDONED) && $object->close_code == 'debtcompensation') {
+            print '<tr><td colspan="' . $nbcols . '" align="right" class="nowrap">';
+            $text = 'Note : '.($object->close_note ? $object->close_note : 'Aucune note');
+            print $form->textwithpicto('Compensation de créance' . ':', $text, - 1);
+            print '</td><td align="right">' . price($object->total_ttc - $creditnoteamount - $depositamount - $totalpaye) . '</td><td>&nbsp;</td></tr>';
+            $resteapayeraffiche = 0;
+            $cssforamountpaymentcomplete = '';
+        }
+        // Paye partiellement ou Abondon 'bankcharges'
+        if (($object->statut == Facture::STATUS_CLOSED || $object->statut == Facture::STATUS_ABANDONED) && $object->close_code == 'bankcharges') {
+            print '<tr><td colspan="' . $nbcols . '" align="right" class="nowrap">';
+            $text = 'Note : '.($object->close_note ? $object->close_note : 'Aucune note');
+            print $form->textwithpicto('Frais bancaire' . ':', $text, - 1);
             print '</td><td align="right">' . price($object->total_ttc - $creditnoteamount - $depositamount - $totalpaye) . '</td><td>&nbsp;</td></tr>';
             $resteapayeraffiche = 0;
             $cssforamountpaymentcomplete = '';
