@@ -341,6 +341,9 @@ if ($id > 0 || $ref)
             print $form->editfieldval($text,'cost_price',$object->cost_price,$object,$user->rights->produit->creer||$user->rights->service->creer,'amount:6');
             print '</td></tr>';
 
+      $parameters = array();
+      $reshook = $hookmanager->executeHooks('addMoreObjectOptions', $parameters, $object, $action);
+
 			print '</table>';
 
             print '</div>';
