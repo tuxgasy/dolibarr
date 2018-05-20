@@ -98,9 +98,20 @@ if ($idprod > 0)
 
 	if(!empty($conf->stock->enabled))
 	{
+    $label = $langs->trans("PMPValueShort");
+
+    // Frais d'approche
+    $cost_approach = 0;
+    $sql = 'SELECT cost_approach FROM '.MAIN_DB_PREFIX.'production_product_extrafields WHERE fk_product = '.$idprod;
+    $resql = $db->query($sql);
+    if($resql and $obj = $db->fetch_object($resql)){
+      $cost_approach = $obj->cost_approach;
+      $label .= ' commercial';
+    }
+
 		// Add price for pmp
-		$price=$producttmp->pmp;
-		$prices[] = array("id" => 'pmpprice', "price" => price2num($price), "label" => $langs->trans("PMPValueShort").': '.price($price,0,$langs,0,0,-1,$conf->currency), "title" => $langs->trans("PMPValueShort").': '.price($price,0,$langs,0,0,-1,$conf->currency));  // For price field, we must use price2num(), for label or title, price()
+		$price=$producttmp->pmp + $cost_approach;
+		$prices[] = array("id" => 'pmpprice', "price" => price2num($price), "label" => $label.': '.price($price,0,$langs,0,0,-1,$conf->currency), "title" => $label.': '.price($price,0,$langs,0,0,-1,$conf->currency));  // For price field, we must use price2num(), for label or title, price()
 	}
 }
 
