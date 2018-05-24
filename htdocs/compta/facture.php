@@ -3748,15 +3748,6 @@ else if ($id > 0 || ! empty($ref))
             $resteapayeraffiche = 0;
             $cssforamountpaymentcomplete = '';
         }
-        // Paye partiellement ou Abondon 'debtcompensation'
-        if (($object->statut == Facture::STATUS_CLOSED || $object->statut == Facture::STATUS_ABANDONED) && $object->close_code == 'debtcompensation') {
-            print '<tr><td colspan="' . $nbcols . '" align="right" class="nowrap">';
-            $text = 'Note : '.($object->close_note ? $object->close_note : 'Aucune note');
-            print $form->textwithpicto('Compensation de créance' . ':', $text, - 1);
-            print '</td><td align="right">' . price($object->total_ttc - $creditnoteamount - $depositamount - $totalpaye) . '</td><td>&nbsp;</td></tr>';
-            $resteapayeraffiche = 0;
-            $cssforamountpaymentcomplete = '';
-        }
         // Paye partiellement ou Abandon 'badcustomer'
         if (($object->statut == Facture::STATUS_CLOSED || $object->statut == Facture::STATUS_ABANDONED) && $object->close_code == 'badcustomer') {
             print '<tr><td colspan="' . $nbcols . '" align="right" class="nowrap">';
