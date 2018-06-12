@@ -2899,10 +2899,10 @@ else if ($id > 0 || ! empty($ref))
 	if ($action == 'paid' && $resteapayer > 0) {
 		// Code
 		$i = 0;
-		/*$close [$i] ['code'] = 'discount_vat';
+		$close [$i] ['code'] = 'discount_vat';
 		$i ++;
 		$close [$i] ['code'] = 'badcustomer';
-		$i ++;*/
+		$i ++;
     $close [$i] ['code'] = 'debtcompensation';
     $i ++;
     $close [$i] ['code'] = 'bankcharges';
@@ -2911,10 +2911,10 @@ else if ($id > 0 || ! empty($ref))
     $i ++;
 		// Help
 		$i = 0;
-		/*$close [$i] ['label'] = $langs->trans("HelpEscompte") . '<br><br>' . $langs->trans("ConfirmClassifyPaidPartiallyReasonDiscountVatDesc");
+		$close [$i] ['label'] = $langs->trans("HelpEscompte") . '<br><br>' . $langs->trans("ConfirmClassifyPaidPartiallyReasonDiscountVatDesc");
 		$i ++;
 		$close [$i] ['label'] = $langs->trans("ConfirmClassifyPaidPartiallyReasonBadCustomerDesc");
-		$i ++;*/
+		$i ++;
     $close [$i] ['label'] = 'Compensation de créance';
     $i ++;
     $close [$i] ['label'] = 'Le reste à payer <strong>('.$resteapayer.' '.$langs->trans('Currency'.$conf->currency).')</strong> est un frais bancaire';
@@ -2923,10 +2923,10 @@ else if ($id > 0 || ! empty($ref))
     $i ++;
 		// Texte
 		$i = 0;
-		/*$close [$i] ['reason'] = $form->textwithpicto($langs->transnoentities("ConfirmClassifyPaidPartiallyReasonDiscountVat", $resteapayer, $langs->trans("Currency" . $conf->currency)), $close [$i] ['label'], 1);
+		$close [$i] ['reason'] = $form->textwithpicto($langs->transnoentities("ConfirmClassifyPaidPartiallyReasonDiscountVat", $resteapayer, $langs->trans("Currency" . $conf->currency)), $close [$i] ['label'], 1);
 		$i ++;
 		$close [$i] ['reason'] = $form->textwithpicto($langs->transnoentities("ConfirmClassifyPaidPartiallyReasonBadCustomer", $resteapayer, $langs->trans("Currency" . $conf->currency)), $close [$i] ['label'], 1);
-		$i ++;*/
+		$i ++;
     $close [$i] ['reason'] = $form->textwithpicto($close [$i] ['label'], "Une <strong>compensation de créance</strong> consiste à se payer une créance que lui un débiteur sur une dette qu'elle doit elle-même à ce dernier.", 1);
     $i ++;
     $close [$i] ['reason'] = $form->textwithpicto($close [$i] ['label'], "Un <strong>frais bancaire</strong> peut être lié à un frais de virement, une commission de la banque (ex.: Paypal).", 1);
