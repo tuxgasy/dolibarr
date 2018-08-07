@@ -3814,6 +3814,15 @@ else if ($id > 0 || ! empty($ref))
             $resteapayeraffiche = 0;
             $cssforamountpaymentcomplete = '';
         }
+        // Paye partiellement ou Abondon 'recoverycost'
+        if (($object->statut == Facture::STATUS_CLOSED || $object->statut == Facture::STATUS_ABANDONED) && $object->close_code == 'recoverycost') {
+            print '<tr><td colspan="' . $nbcols . '" align="right" class="nowrap">';
+            $text = 'Note : '.($object->close_note ? $object->close_note : 'Aucune note');
+            print $form->textwithpicto('Indemnité de frais de procédure' . ':', $text, - 1);
+            print '</td><td align="right">' . price($object->total_ttc - $creditnoteamount - $depositamount - $totalpaye) . '</td><td>&nbsp;</td></tr>';
+            $resteapayeraffiche = 0;
+            $cssforamountpaymentcomplete = '';
+        }
 
         // Billed
         print '<tr><td colspan="' . $nbcols . '" align="right">' . $langs->trans("Billed") . ' :</td><td align="right">' . price($object->total_ttc) . '</td><td>&nbsp;</td></tr>';
