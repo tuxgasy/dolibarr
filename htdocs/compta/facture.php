@@ -2909,6 +2909,8 @@ else if ($id > 0 || ! empty($ref))
     $i ++;
     $close [$i] ['code'] = 'rompu';
     $i ++;
+    $close [$i] ['code'] = 'recoverycost';
+    $i ++;
 		// Help
 		$i = 0;
 		$close [$i] ['label'] = $langs->trans("HelpEscompte") . '<br><br>' . $langs->trans("ConfirmClassifyPaidPartiallyReasonDiscountVatDesc");
@@ -2921,6 +2923,8 @@ else if ($id > 0 || ! empty($ref))
     $i ++;
     $close [$i] ['label'] = 'Le reste à payer <strong>('.$resteapayer.' '.$langs->trans('Currency'.$conf->currency).')</strong> est un rompu';
     $i ++;
+    $close [$i] ['label'] = 'Le reste à payer <strong>('.$resteapayer.' '.$langs->trans('Currency'.$conf->currency).')</strong> est une indemnité de frais de procédure';
+    $i ++;
 		// Texte
 		$i = 0;
 		$close [$i] ['reason'] = $form->textwithpicto($langs->transnoentities("ConfirmClassifyPaidPartiallyReasonDiscountVat", $resteapayer, $langs->trans("Currency" . $conf->currency)), $close [$i] ['label'], 1);
@@ -2932,6 +2936,8 @@ else if ($id > 0 || ! empty($ref))
     $close [$i] ['reason'] = $form->textwithpicto($close [$i] ['label'], "Un <strong>frais bancaire</strong> peut être lié à un frais de virement, une commission de la banque (ex.: Paypal).", 1);
     $i ++;
     $close [$i] ['reason'] = $form->textwithpicto($close [$i] ['label'], "Un <strong>rompu</strong> est un écart de règlement non significatif.", 1);
+    $i ++;
+    $close [$i] ['reason'] = $form->textwithpicto($close [$i] ['label'], "Une <strong>indemnité</strong> est un frais de recouvrement suite un retard de paiement.", 1);
     $i ++;
 		// arrayreasons[code]=reason
 		foreach ($close as $key => $val) {
