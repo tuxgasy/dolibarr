@@ -405,14 +405,7 @@ if ($id > 0 || $ref)
 
 				// Ref supplier
 				print '<tr><td class="fieldrequired">'.$langs->trans("SupplierRef").'</td><td>';
-				if ($rowid)
-				{
-					print $object->fourn_ref;
-				}
-				else
-				{
-					print '<input class="flat" name="ref_fourn" size="12" value="'.(GETPOST("ref_fourn")?GETPOST("ref_fourn"):'').'">';
-				}
+				print '<input class="flat" name="ref_fourn" size="12" value="'.(GETPOST("ref_fourn")?GETPOST("ref_fourn"):$object->fourn_ref).'">';
 				print '</td>';
 				print '</tr>';
 
