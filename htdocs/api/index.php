@@ -144,7 +144,7 @@ foreach ($modulesdir as $dir)
                      * @todo : take care of externals module!
                      * @todo : use getElementProperties() function ?
                      */
-                    $dir_part = DOL_DOCUMENT_ROOT.'/'.$moduledirforclass.'/class/';
+                    $dir_part = dol_buildpath('/'.$moduledirforclass.'/class/');
 
                     $handle_part=@opendir(dol_osencode($dir_part));
                     if (is_resource($handle_part))
