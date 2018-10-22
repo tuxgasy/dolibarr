@@ -248,7 +248,7 @@ if (($action == 'create' || $action == 'add') && ! $error) {
 		// End of object creation, we show it
 		if ($id > 0 && ! $error) {
 			
-			foreach($orders_id as $fk_supplier_order) {
+			/*foreach($orders_id as $fk_supplier_order) {
 				$supplier_order = new CommandeFournisseur($db);
 				if ($supplier_order->fetch($fk_supplier_order)>0 && $supplier_order->statut == 5) 
 				{
@@ -265,7 +265,7 @@ if (($action == 'create' || $action == 'add') && ! $error) {
 					}
 					
 				}
-			}
+			}*/
 			
 			if(!$error) {
 				$db->commit();
