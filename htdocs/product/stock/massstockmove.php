@@ -381,7 +381,28 @@ print '</td>';
 if ($conf->productbatch->enabled)
 {
 	print '<td>';
-	print '<input type="text" name="batch" class="flat maxwidth50onsmartphone" value="'.$batch.'">';
+	print '<input type="text" name="batch" id="batch" class="flat maxwidth50onsmartphone" value="'.$batch.'">'."\n";
+  print <<<EOF
+<script>
+$(document).ready(function(){
+  $("input#batch").keyup(function(){
+    var productid = $("#productid").val();
+    if(productid.length == 0){
+      return;
+    }
+
+    $("input#batch").autocomplete({
+      source: function(request, response){
+        $.getJSON("/product/ajax/batchs.php", {productid: productid, batch: request.term}, function(data){
+          response(data);
+        });
+      }
+    });
+  });
+});
+</script>
+
+EOF;
 	print '</td>';
 }
 // In warehouse
