@@ -294,6 +294,7 @@ if ($resql)
 	print '<td class="liste_titre" align="right">&nbsp;</td>';
 	print '<td class="liste_titre">&nbsp;</td>';
 	if ($virtualdiffersfromphysical) print '<td class="liste_titre">&nbsp;</td>';
+  print '<td class="liste_titre">&nbsp;</td>';
 	print '<td class="liste_titre">&nbsp;</td>';
 	print '<td class="liste_titre" colspan="'.$colspan_warehouse.'">&nbsp;</td>';
 	print '<td class="liste_titre"></td>';
@@ -321,6 +322,7 @@ if ($resql)
 	    }
 	}
 	if ($virtualdiffersfromphysical) print_liste_field_titre("VirtualStock",$_SERVER["PHP_SELF"], "",$param,"",'align="right"',$sortfield,$sortorder);
+  print_liste_field_titre("Stock disponible", '', '','','','align="right"');
 	print_liste_field_titre('');
 	print_liste_field_titre( $langs->trans("Status").' ('.$langs->trans("Sell").')',$_SERVER["PHP_SELF"], "p.tosell",$param,"",'align="right"',$sortfield,$sortorder);
 	print_liste_field_titre( $langs->trans("Status").' ('.$langs->trans("Buy").')',$_SERVER["PHP_SELF"], "p.tobuy",$param,"",'align="right"',$sortfield,$sortorder);
@@ -381,6 +383,8 @@ if ($resql)
 			print $product->stock_theorique;
 			print '</td>';
 		}
+    $stockdisponible = $product->stock_theorique - $product->stock_warehouse[5]->real; // Stock théorique - Stock Bar
+    print '<td align="right">'.$stockdisponible.'</td>';
 		print '<td align="right"><a href="'.DOL_URL_ROOT.'/product/stock/movement_list.php?idproduct='.$product->id.'">'.$langs->trans("Movements").'</a></td>';
 		print '<td align="right" class="nowrap">'.$product->LibStatut($objp->statut,5,0).'</td>';
         print '<td align="right" class="nowrap">'.$product->LibStatut($objp->tobuy,5,1).'</td>';
